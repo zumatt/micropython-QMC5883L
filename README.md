@@ -16,6 +16,18 @@ Import the library, setup the I2C and the qmc5883l module.
 
 You find an example of usage in the file main.py
 
+## Possible commands
+```
+#Performs a reset of the device
+	reset()
+#Device goes into a sleep state
+	stanbdy()
+#Performs a read of the data
+	read()
+#Calculate compass heading based on provided magnetometer X and Y values, returns heading (degrees, minutes).
+	heading()
+```
+
 ## References
 * Based on: 
 	* https://github.com/kmm/micropython-QMC5883L
