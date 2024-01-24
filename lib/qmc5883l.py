@@ -71,15 +71,11 @@ class QMC5883L():
     
     def reset(self):
         """ Performs a reset of the device by writing to the memory address 0xA (CR2 register), the value of 0b10000000 """
-        self.i2c.start()
         self.i2c.writeto_mem(self.address, self.REG_CR2, b'\x10000000')
-        self.i2c.stop()
 
     def stanbdy(self):
         """ Device goes into a sleep state by writing to memory address 0x9 (CR1 register), 0b00 """
-        self.i2c.start()
         self.i2c.writeto_mem(self.address, self.REG_CR1, b'\x00')
-        self.i2c.stop()
     
     def write_config(self,
                     mode = MODE_CONT,
@@ -112,10 +108,8 @@ class QMC5883L():
         cr2_byte = (rol_pnt << 6) | int_en
         # print("config cr1 (0x09): ", hex(cr1_byte), " cr2 (0x0A):", hex(cr2_byte))  
         # write out parameters to control registers
-        self.i2c.start()
         self.i2c.writeto_mem(self.address, self.REG_CR1, bytearray([cr1_byte]))
         self.i2c.writeto_mem(self.address, self.REG_CR2, bytearray([cr2_byte]))
-        self.i2c.stop()
         time.sleep(0.005)
                     
     def read(self):
@@ -153,4 +147,4 @@ class QMC5883L():
 
     def format_result(self, x, y, z):
         degrees, minutes = self.heading(x, y)
-        return 'X: {:.4f}, Y: {:.4f}, Z: {:.4f}, Heading: {}° {}′ '.format(x, y, z, degrees, minutes)    
+        return 'X: {:.4f}, Y: {:.4f}, Z: {:.4f}, Heading: {}° {}'.format(x, y, z, degrees, minutes) 
